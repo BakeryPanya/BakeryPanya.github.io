@@ -1,0 +1,205 @@
+body{
+  font-family: HG創英角ﾎﾟｯﾌﾟ体;
+
+}
+
+h1{
+  font-size: 40px;
+}
+
+.text{
+  margin-top: 75px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-left: 200px;
+  padding-bottom: 20px;
+
+}
+
+.dice{
+    margin-left:auto;
+    margin-right:auto;
+    width: 172mm;
+    height: 251mm;
+    border:solid;
+    background-color: #fadadd;
+}
+.title{
+  margin:5px;
+  padding:10px;
+  display: flex;
+}
+
+h2.value{
+    color: red;
+}
+.one{
+  margin: 15px;
+  padding: 3px;
+  background-color: magenta;
+  border:solid;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.two{
+  margin: 15px;
+  padding: 5px;
+  background-color: orange;
+  border:solid;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.three{
+  margin: 15px;
+  padding: 5px;
+  background-color: purple;
+  border:solid;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.four{
+  margin: 15px;
+  padding: 5px;
+  border:solid;
+  background-color: yellow;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.five{
+  margin: 15px;
+  padding: 5px;
+  border:solid;
+  background-color: lightblue;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.six{
+  margin: 15px;
+  padding: 5px;
+  background-color: lightgreen;
+  border:solid;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+
+img{
+  width: 110px;
+  height: 100px;
+}
+
+
+
+@media print{
+  body{
+    font-family: HG創英角ﾎﾟｯﾌﾟ体;
+  }
+
+  h1{
+    font-size: 40px;
+  }
+
+
+
+  .dice{
+
+      margin-left:auto;
+      margin-right:auto;
+      width: 172mm;
+      height: 251mm;
+      border:solid;
+      background-color: #fadadd;
+  }
+  .title{
+    margin:5px;
+    padding:10px;
+    display: flex;
+  }
+
+  h2.value{
+      color: red;
+  }
+  .one{
+    margin: 15px;
+    padding: 3px;
+    background-color: magenta;
+    border:solid;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .two{
+    margin: 15px;
+    padding: 5px;
+    background-color: orange;
+    border:solid;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .three{
+    margin: 15px;
+    padding: 5px;
+    background-color: purple;
+    border:solid;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .four{
+    margin: 15px;
+    padding: 5px;
+    border:solid;
+    background-color: yellow;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .five{
+    margin: 15px;
+    padding: 5px;
+    border:solid;
+    background-color: lightblue;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .six{
+    margin: 15px;
+    padding: 5px;
+    background-color: lightgreen;
+    border:solid;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  img{
+    width: 110px;
+    height: 100px;
+  }
+
+  input{
+    display: none;
+  }
+
+  .hidden{
+    display: none;
+  }
+}
