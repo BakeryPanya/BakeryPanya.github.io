@@ -1,0 +1,118 @@
+
+body{
+  font-family: HG創英角ﾎﾟｯﾌﾟ体;
+
+}
+
+
+h1{
+  font-size: 20px;
+}
+
+.hid{
+  font-size: 40px;
+}
+
+
+
+.text{
+  margin-top: 32.5px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10px;
+  padding-left: 100px;
+  padding-bottom: 10px;
+
+}
+
+.dice{
+    margin-left:auto;
+    margin-right:auto;
+    width: 86mm;
+    height: 125.5mm;
+    border:solid;
+    background-color: #fadadd;
+}
+.title_html{
+  margin:2.5px;
+  padding:5px;
+  display: flex;
+}
+
+h2.value{
+    font-size: 75%;
+    color: red;
+    margin: 3px;
+}
+h3.where{
+  font-size: 75%;
+  margin: 3px;
+}
+h1.title{
+  font-size: 75%;
+  margin: 3px;
+}
+.one{
+  margin: 7.5px;
+  padding: 2.5px;
+  background-color: magenta;
+  border:solid;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.two{
+  margin: 7.5px;
+  padding: 2.5px;
+  background-color: orange;
+  border:solid;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.three{
+  margin: 7.5px;
+  padding: 2.5px;
+  background-color: purple;
+  border:solid;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.four{
+  margin: 7.5px;
+  padding: 2.5px;
+  border:solid;
+  background-color: yellow;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.five{
+  margin: 7.5px;
+  padding: 2.5px;
+  border:solid;
+  background-color: lightblue;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.six{
+  margin: 7.5px;
+  padding: 2.5px;
+  background-color: lightgreen;
+  border:solid;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+}
+
+img{
+  width: 55px;
+  height: 50px;
+}

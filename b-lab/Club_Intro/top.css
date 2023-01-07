@@ -1,0 +1,154 @@
+
+/* 
+ポイント
+borderは枠線
+border-radiusは角を丸くする
+marginとpaddingは見た目の整えで使います
+.が最初についてたらクラスのcss
+ついてなかったらタグのcss
+
+*/
+body{
+    /* 背景写真 */
+    background-image: url(./square.png);
+    /* 繰り返し設定 */
+    background-repeat: repeat;
+    /* marginと書式設定 */
+    
+    /* display: flex; */
+}
+
+/* ここからクラスのCSS */
+/* 基本同じでendのみpaddingを入れています */
+.title{
+    /* 場所と枠線付け */
+    /* なんかずれてるので直してみよう */
+    margin-top: 100px;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-bottom: 100px;
+    padding: 100px;
+    border: solid;
+    border-radius: 30px;
+    background-color: #FFFAF0;
+
+    display: block;
+    
+}
+
+.intro{
+     /* 場所と枠線付け */
+     margin-top: 100px;
+     margin-left: 200px;
+     margin-right: 200px;
+     margin-bottom: 100px;
+     padding: 40px;
+     border: solid;
+     border-radius: 30px;
+     background-color: #FFFAF0;
+ 
+
+    display: block;
+    
+}
+
+.end{
+     /* 場所と枠線付け */
+     margin-top: 100px;
+     margin-left: 200px;
+     margin-right: 200px;
+     margin-bottom: 100px;
+     padding: 40px;
+     border: solid;
+     border-radius: 30px;
+     background-color: #FFFAF0;
+ 
+
+    display: block;
+}
+
+.name{
+    font-size: 30px;
+    padding: 100px;
+}
+
+.title_img{
+    /* marginとpadding */
+   margin: auto;
+    /* 写真の縁決め */
+    border: thick double #d3d3d3;
+}
+
+.survey{
+
+    /* 場所と枠線付け */
+   
+    background-color: #fff;
+    margin: 5%;
+    padding: 5%;
+    border: solid;
+    border-color: black;
+
+    display: block;
+
+
+}
+
+/* 
+ここからはやばいので自信がある子だけ自己責任で触ること！！！
+パン屋さんとの約束だぞ！ 
+*/
+
+/* 虹色の文字のcss */
+.name{
+    
+    background: linear-gradient(to right,#e60000,#f39800,#fff100,#009944,#0068b7,#1d2088,#920783);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    display: inline-block;
+}
+@keyframes example4{
+    100% { background-position: 200%; }
+}
+/* スライドアニメーション */
+.slide {
+    position   : relative; /*相対位置で決定 */
+    overflow   : hidden; /*はみ出した部分は切り取り*/
+    width      : 300px; /*横幅*/
+    height     : 300px; /*縦幅*/
+    margin     : auto;      
+    background : #fff;/*背景色*/
+  }
+   
+   /*=== 画像の設定 ======================================= */
+  .slide img {
+    display    : block;
+    position   : absolute;
+                        /* 画像のサイズを表示エリアに合せる */
+    width      : inherit;
+    height     : inherit;
+    left       : 100%;
+    animation  : slideAnime 15s ease infinite;
+  }
+   
+   /*=== スライドのアニメーションを段差で開始する ========= */
+  .slide img:nth-of-type(1) { animation-delay: 0s }
+  .slide img:nth-of-type(2) { animation-delay: 5s }
+  .slide img:nth-of-type(3) { animation-delay: 10s }
+   
+   /*=== スライドのアニメーション ========================= */
+  @keyframes slideAnime{
+     0% { left: 100%  }
+     3% { left: 0     }
+    30% { left: 0     }
+    33% { left: -100% }
+   100% { left: -100% }
+  }
+
+
+/*今回はスライド三枚バージョンです。参考サイトは https://webparts.cman.jp/img/slideshow/*/
+/*今回はコピペですが勉強になったので活用したい*/
+
+/*虹色の参考サイトは　https://csshtml.work/rainbow/*/
+/*意外とめんどくさいので子供たちにはコピペとclassの使わせ方を教えます*/

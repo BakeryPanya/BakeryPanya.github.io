@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="top.css">
+    <title>部活動紹介ページ</title>
+</head>
+
+<body>
+    <div class="title">
+
+        <!-- タイトル部分 -->
+        <div class="name">
+            <h1>コンピュータ部</h1>
+        </div>
+
+        <!-- 紹介文部分 -->
+
+        <div class="one_intro">
+            <h2>コンピュータ部にようこそ！</h2>
+            <p>コンピュータ部は色々なパソコンの知識やタイピングの勉強をしています。</p>
+            <p>日々頑張っていますのでよろしくお願いします</p>
+        </div>
+
+        <!-- 写真部分 -->
+        <img class="title_img" src="computer.jpeg">
+        <p>20XX/XX/XXに撮影</p> 
+
+    </div>
+    
+    <!-- 分かれ目 -->
+
+    <div class="intro">
+
+        <!-- スライドショー部分 -->
+        <h2>活動風景</h2>
+        <div class="slide">
+            <img src="comp1.png" >
+            <img src="comp2.png" >
+            <img src="comp3.png" >
+        </div>
+        <!-- 活動風景紹介 -->
+        <p>アットホームに活動しています！</p>
+    </div>
+
+    <!-- 分かれ目 -->
+
+    <div class="end">
+        <!-- form紹介 -->
+        <h2>興味があれば部活動の参加希望申請を出してみてください！</h2>
+        <h2>下のformから出せます!</h2>
+        <!-- form部分 -->
+        <form class ="survey" name="survey" action="">
+            <h1>参加希望フォーム</h1>
+            <p>お名前:<input type="text" name="NAME"></p>
+            <p>学年:
+                <select name="YEAR" form="survey">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    </select>
+            </p>
+            
+            <p>組:
+                <select name="YEAR" form="survey">
+                    <option>A</option>
+                    <option>B</option>
+                    <option>C</option>
+                    <option>D</option>
+                    <option>E</option>
+                    </select>
+            </p>
+
+            <p><input type="submit" value="送信する"></p>
+
+        </form>
+    </div>
+</body>
+</html>

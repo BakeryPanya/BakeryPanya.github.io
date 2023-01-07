@@ -1,104 +1,55 @@
 <!DOCTYPE html>
-<html lang="ja" dir="ja">
-  <head>
-    <meta charset="utf-8">
-    <title>サイコロの旅ジェネレーター</title>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./top.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap" rel="stylesheet">
+    <title>パン屋さん。のホームページ</title>
+</head>
+<body>
 
-    <link rel="stylesheet" href="./dice.css">
+    <div class="para">Welcome to PANYA's page </div>
 
-  </head>
-  <body>
-    <div class="hidden">
-      <h1>サイコロの旅ジェネレーター</h1>
-      <p>印刷想定で作成しています！</p>
-      <p>印刷時はカラー印刷にしてヘッダーとフッターを消してね</p>
-      <p>-----------------------------------------------</p>
-      <div class="sai">
-        <p>サイコロを振ろう</p>
-        <img id = "koro" src="dice_img/1-1.png">
-        <input type="button" id = "btn10" value="サイコロ">
-        <div class="kazu">
-          <h1 id="kazu_detail">出た目的地は○○だ！</h1>
+    <div class="title">
+        <p>パン屋さん。のホームページ</p>
+        <p>パン屋さん。のまったりwebsiteです</p>
+        <p>ゆっくりどうぞ</p>
+    </div>
+
+    <div class="para">B-lab sample</div>
+        
+        <div class="b-lab">
+            <p>b-labの教材完成例は下のリンクから</p>
+            <ul>
+                <li><a href="b-lab/Club_Intro/index.html">部活動紹介ページ(作品例)</a></li>
+            </ul>
         </div>
-      </div>
 
-      <a href="./dice1.html">スクショ用はこちらから</a>
-    </div>
-    <section class="dice">
+    <div class="para">Port-folio</div>
 
-      <div class="title">
-        <h3 id="where">こっから→ここまで</h3>
-        <h1 class="title" id="trip">サイコロの旅</h1>
-        <h2 class="value" id="num">第三弾！！</h2>
-      </div>
+        <div class="port">
+            <p>自身の適当な制作物はこちらから</p>
+            <ul>
+                <li><a href="port/dice/dice2.html">サイコロの旅ジェネレーター(試作品 cssぶっ壊れてる時が多い)</a></li>
+            </ul>
+        </div>
 
-      <div class="one">
-        <img src="dice_img/1-1.png" alt="1の目">
-        <h1 id="one_detail" >やまと号</h1>
-      </div>
+    <div class="para"> Study</div>
 
-      <div class="two">
-        <img src="dice_img/2-2.png" alt="2の目">
-        <h1 id="two_detail">フローラ号</h1>
-      </div>
+        <div class="study">
+            <p>テスト対策関連のzipダウンロードはこちらから</p>
+            <p class="high_right">※zipにはパスワードが付いているため部外者は見れません</p>
+            <ul>
+                <li>まだアップロードされていません</li>
+            </ul>
 
-      <div class="three">
-        <img src="dice_img/3-3.png" alt="3の目">
-        <h1 id="three_detail">シリウス号</h1>
-      </div>
-
-      <div class="four">
-        <img src="dice_img/4-4.png" alt="4の目">
-        <h1 id="four_detail">ブルーメッツ号</h1>
-      </div>
-
-      <div class="five">
-        <img src="dice_img/5-5.png" alt="5の目">
-        <h1 id="five_detail">ニューブリーズ号</h1>
-      </div>
-
-      <div class="six">
-        <img src="dice_img/6-6.png" alt="6の目">
-        <h1 id="six_detail">はかた号</h1>
-      </div>
-
-
-    <div class="text">
-      <p><input type="text" id="text_one" value="やまと号">
-      <input type="button" id = "btn1" value="1の目変更"></p>
-
-      <p><input type="text" id="text_two" value="フローラ号">
-      <input type="button" id = "btn2" value="2の目変更"></p>
-
-      <p><input type="text" id="text_three" value="シリウス号">
-      <input type="button" id = "btn3" value="3の目変更"></p>
-
-      <p><input type="text" id="text_four" value="ブルーメッツ号">
-        <input type="button" id = "btn4" value="4の目変更"></p>
-
-      <p><input type="text" id="text_five" value="ニューブリーズ号">
-      <input type="button" id = "btn5" value="5の目変更"></p>
-
-      <p><input type="text" id="text_six" value="はかた号">
-      <input type="button" id = "btn6" value="6の目変更"></p>
-
-      <p><input type="text" id="doko" value="こっから→ここまで">
-      <input type="button" id = "btn7" value="行き先変更"></p>
-
-      <p><input type="text" id="di" value="サイコロの旅">
-      <input type="button" id = "btn8" value="タイトル"></p>
-
-      <p><input type="text" id="dan" value="第三弾！！">
-      <input type="button" id = "btn9" value="第何弾"></p>
-
-      <p> <input type="button" value="印刷" onclick="window.print();"> </p>
-
-
-
-
+        </div>
     </div>
 
-
-    <script src="./dice.js"></script>
-  </body>
+    
+</body>
 </html>

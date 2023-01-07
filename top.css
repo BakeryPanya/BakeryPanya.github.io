@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Covered+By+Your+Grace&display=swap');
+body,html{
+    height: 100%;
+    margin: 0 auto;
+    letter-spacing: 2px;
+    font-size: 13px;
+
+}
+
+div{
+  box-sizing: border-box;
+  color: cornsilk;
+  font-size: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 5%;
+}
+
+.para{
+    -webkit-text-stroke: 1px #000;
+    background-image: url('./img/saka.jpg');
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: 'Covered By Your Grace', cursive;
+}
+
+.content{
+    font-size: 3rem;
+    background-color: #111;
+}
+
+.title{
+    font-size: 3rem;
+    background-color: #111;
+    display: block;
+}
+
+.b-lab{
+    font-size: 3rem;
+    background-color: #111;
+    display: block;
+}
+
+.port{
+    font-size: 3rem;
+    background-color: #111;
+    display: block;
+}
+
+.study{
+    height: 100%;
+    font-size: 3rem;
+    background-color: #111;
+    display: block;
+}
