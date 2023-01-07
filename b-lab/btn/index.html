@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./top.css">
+</head>
+<body>
+    <button id="btn" class="wow">
+        押すとでかくなる
+    </button>
+
+    
+</body>
+
+<script>
+    let width = 100;
+    let height = 100;
+
+    btn.onclick = click;
+
+
+function click(){
+    width += 10;
+    height += 30;
+    document.getElementById("btn").style.width = width + "px";
+    document.getElementById("btn").style.height = height + "px";
+    
+
+}
+
+</script>
+
+</html>
