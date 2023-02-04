@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>今日の日付</h1>
+</body>
+
+<script>
+let date = new Date;
+let year = date.getFullYear();
+let month = date.getMonth();
+let day = date.getDate();
+//足し算とか引き算とかもできるぞ
+document.write("<p>"+year+"年"+month+"月"+day+"日"+"</p>");
+//dateにそれぞれこのようなものを付けると　年と月と日を取得できます
+//date.getSeconds()とすると秒が獲得できます　次回へのヒント
+//date.getMinutes()とすると分が獲得できます　次回へのヒント
+</script>
+
+</html>
