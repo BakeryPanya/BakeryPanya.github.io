@@ -13,43 +13,29 @@
 </body>
 
 <script>
-//穴埋め問題です。このソースコードをダウンロードして問題を解いてください。
-//今のままではなにも動かないJavaScriptコードになってしまっています、、、
-//ヒントスライドを使ってみんなでチャレンジしてみましょう
-//パン屋さん。からのみんなで挑んでほしい課題　二週間かかってもいいから頑張ってほしい！
-//Dateクラスを使うものはめんどくさすぎたので消しました
-//もっと簡単にやる方法としてsetIntervalを使ってやるぞ
-
-
 let time = 0;//何秒立ったか決定するぞ
-let a = document.getElementById("time");//idがtimeのところのpタグです。
+let a = document.getElementById("time");//idがtimeのところのpタグです。//問題
 let b = document.getElementById("btn1");
 let interval;
 let name;
 
+//今日の課題1　このコードを説明してください
 function count(){
     time++;
 
-    //問題
     name = time;
-    a.innerHTML=name;//pタグに書き込みます
+    a.innerHTML=name;//どういうコードかな？
 }
 
-
-//かだいをやるときにはいじらないこと。自分で好きにするときはよい
 b.onclick = function(){
 
     if(interval == null){
         interval = setInterval(count,10);//10msごとにcount関数が実行されてカウントが増えます
+        clearInterval(interval);
     }
 
     time = 0;
 }
-//
-
-
-
-
 </script>
 
 </html>
