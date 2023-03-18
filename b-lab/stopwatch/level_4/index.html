@@ -14,8 +14,7 @@
 </body>
 
 <script>
-//さて問題です。このコードは何かがまだおかしいです。
-//今日の課題はこのコードを直してQに答えてください
+
 
 let time = 0;//何秒立ったか決定するぞ
 let a = document.getElementById("time");//idがtimeのところのpタグです。
@@ -23,17 +22,19 @@ let b = document.getElementById("btn1");
 let c = document.getElementById("btn2");
 let interval;
 let name;
-
 //Q1:count関数を直して正しい表示にしなさい level3
-
 function count(){
+    time++;
 
-    time++; 
+    //解答
+    
     var hour = Math.floor(time/60000);
-    var min = Math.floor(time/6000);
-    var sec = Math.floor(time/100);
-    var mill = time%100;
+    //Q1 ANS:count関数を直して正しい表示にしなさい level3
+    var min = Math.floor(time/6000) - 60*hour;//変更箇所
+    var sec = Math.floor(time/100) -60*min;//変更箇所
+    //
 
+    var mill = time%100;
 
     if(hour < 10){
         hour = "0" + hour;
@@ -52,37 +53,42 @@ function count(){
     }
 
     //Q2:ここにif文でhourが99を超えたとき全てを0にリセットする命令を書きなさい level3
+    if(hour > 99){
+        time = 0;
+    }
+    //変更箇所
 
-    name = hour + ":" + min + ":" + sec + ":" + mill;
+    name = hour + ":" + min + ":" + sec + ":" + mill;//問題
     a.innerHTML=name;//pタグに書き込みます
 }
 
+
+//かだいをやるときにはいじらないこと。自分で好きにするときはよい
 b.onclick = function(){
 
     //Extra Q1:このinterval = nullのif文の意味はなんでしょうか level4
+    //intervalがnullのときに始まるという意味です。
     if(interval == null){
-        interval = setInterval(count,10);
+        interval = setInterval(count,10);//10msごとにcount関数が実行されてカウントが増えます
     }
 
     time = 0;
 }
 
 c.onclick = function(){
+
     clearInterval(interval);
     interval = null;
-
 }
+
+
+
 //Extra Q2:上のonclickとはなんでしょうか. level4
+//上のonclickはbuttonのタグを受け取っているのでbuttonがclickされたときの命令になります
 //Extra Q3:interval = nullにする意味はなんでしょうか　level5
+//nullにすることでintervalのタイマー情報をリセットしもう一度setintervalを行えるようにするためです
 
-//FINAL Q:このストップウォッチをCSSとJSで *かっこよく*　または　*かわいく* しなさい 
-//最後の問題を完成させた者にHTML&CSS&JS基礎を習得したことを認める
-// 2023/03/18 パン屋さん。
-
-//わからなかったら調べる。先生方に聞こう
-//頑張ってください！！！！！健闘を祈ります！
-
-
+//FINAL Q おもいおもいのCSSをかけていたらよしとします
 
 
 </script>
