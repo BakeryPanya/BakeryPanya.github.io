@@ -28,10 +28,10 @@ function count(){
 
     //解答
     
-    var hour = Math.floor(time/60000);
+    var hour = Math.floor(time/360000);
     //Q1 ANS:count関数を直して正しい表示にしなさい level3
-    var min = Math.floor(time/6000) - 60*hour;//変更箇所
-    var sec = Math.floor(time/100) -60*min;//変更箇所
+    var min = Math.floor(time/6000) - 60*Math.floor(time/360000);//変更箇所
+    var sec = Math.floor(time/100) -60*Math.floor(time/6000);//変更箇所
     //
 
     var mill = time%100;
