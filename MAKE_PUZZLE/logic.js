@@ -1,5 +1,5 @@
 // ==========================================
-// logic.js - FIXED & UNIFIED VERSION
+// logic.js - COMPLETE VERSION (Colored Polyominoes)
 // ==========================================
 
 // ---------------------------------------------------------
@@ -84,7 +84,6 @@ function calculateAutoGoalOffset() {
 // 2. RULE VALIDATION
 // ---------------------------------------------------------
 function validateRule() {
-  // 六角形(通過必須)チェック
   if (!validateMustPasses()) return false;
 
   let visited = Array(PUZZLE_DATA.cols).fill().map(() => Array(PUZZLE_DATA.rows).fill(false));
@@ -93,7 +92,6 @@ function validateRule() {
     for (let r = 0; r < PUZZLE_DATA.rows; r++) {
       if (!visited[c][r]) {
         let regionCells = getRegionCells(c, r, visited);
-        // 消去マーク対応の領域判定
         if (!validateRegionWithEliminators(regionCells)) return false;
       }
     }
@@ -128,7 +126,6 @@ function validateRegionWithEliminators(regionCells) {
   let elements = collectElements(regionCells);
   let eliminatorCount = elements.eliminators.length;
 
-  // 判定対象となる要素 (消去マーク自体は除く)
   let targets = [
     ...elements.squares,
     ...elements.stars,
@@ -136,28 +133,17 @@ function validateRegionWithEliminators(regionCells) {
     ...elements.triangleSymbols
   ];
 
-  // ----------------------------------------------------------
-  // 消去マークがない場合 (通常チェック)
-  // ----------------------------------------------------------
   if (eliminatorCount === 0) {
     return checkSubsetRules(targets, regionCells);
   }
 
-  // ----------------------------------------------------------
   // 消去マークがある場合
-  // ----------------------------------------------------------
-  
-  // ターゲットの数より消去マークが多い = 消すものが足りない = NG
   if (eliminatorCount > targets.length) return false;
 
-  // ルール: 「0個」～「N-1個」の消去では『不正解』でなければならない
-  // つまり、消去マークを使わなくても正解だったり、余ったりしてはいけない
+  // 1. 少ない消去数で正解できてしまう場合はNG（余り禁止）
   for (let k = 0; k < eliminatorCount; k++) {
     let keepCount = targets.length - k;
     let combinations = getCombinations(targets, keepCount);
-    
-    // もし「少ない消去数」で正解できる組み合わせが見つかったら、
-    // 消去マークが「余っている（無駄がある）」ことになるので NG
     for (let subset of combinations) {
       if (checkSubsetRules(subset, regionCells)) {
         return false; 
@@ -165,57 +151,80 @@ function validateRegionWithEliminators(regionCells) {
     }
   }
 
-  // ルール: 「N個」消去した時には『正解』になる組み合わせが存在しなければならない
+  // 2. ちょうど消去数分使った時に正解できるか
   {
     let keepCount = targets.length - eliminatorCount;
     let combinations = getCombinations(targets, keepCount);
 
     for (let subset of combinations) {
       if (checkSubsetRules(subset, regionCells)) {
-        return true; // ちょうど使い切って正解できた！
+        return true; 
       }
     }
   }
 
-  // N個消しても正解が見つからなかった = NG (エラーが多すぎる)
   return false;
 }
 
-// サブセットに対するルール判定
+// サブセットに対するルール判定 (★ここが修正の要です)
 function checkSubsetRules(subset, regionCells) {
   let sqs = subset.filter(e => e.kind === 'square');
   let strs = subset.filter(e => e.kind === 'star');
   let polys = subset.filter(e => e.kind === 'poly');
   let tris = subset.filter(e => e.kind === 'triangle');
 
-  // 1. 四角 & 星 (連携ルール)
-  let distinctColors = new Set(sqs.map(s => s.color));
-  if (distinctColors.size > 1) return false; // 色混在NG
+  // -------------------------------------------------
+  // 1. 色分けルール (Square & Polyomino)
+  // -------------------------------------------------
+  // 四角とテトリスは「色」の制約を持つ（領域を分ける必要がある）
+  // 星は自身の色とペアの相手が必要なだけで、他の色の存在を邪魔しない（通常ルール）
+  // しかし、ユーザー要望により「テトリスも四角と同じように色分け」を行う
+  
+  let colorEnforcers = [...sqs, ...polys]; 
+  let distinctColors = new Set(colorEnforcers.map(e => e.color !== undefined ? e.color : 4)); // color未定義なら黄色(4)とみなす
+  
+  if (distinctColors.size > 1) return false; // 2色以上混在していたらNG
 
-  let allColors = new Set([...sqs.map(s => s.color), ...strs.map(s => s.color)]);
-  for (let color of allColors) {
+  // -------------------------------------------------
+  // 2. 星のペアリング (Star & Square & Polyomino)
+  // -------------------------------------------------
+  // 星がある場合、その色のオブジェクト(星、四角、テトリス)の合計は「ちょうど2個」でなければならない
+  
+  // 領域内の星に含まれる全色をチェック
+  let allStarColors = new Set(strs.map(s => s.color));
+  
+  for (let color of allStarColors) {
     let starCount = strs.filter(s => s.color === color).length;
     let squareCount = sqs.filter(s => s.color === color).length;
     
-    // 星がある場合のみ個数制限(2個)が発生
+    // テトリスもカウントに含める（デフォルト色は4）
+    let polyCount = polys.filter(p => (p.color !== undefined ? p.color : 4) === color).length;
+
+    let totalCount = starCount + squareCount + polyCount;
+    
+    // 星が存在する色は、合計2個ペアでなければならない
     if (starCount > 0) {
-      if ((starCount + squareCount) !== 2) return false;
+      if (totalCount !== 2) return false;
     }
-    // 星がない場合、四角は何個あってもOK
   }
 
-  // 2. 三角形
+  // -------------------------------------------------
+  // 3. 三角形
+  // -------------------------------------------------
   for (let t of tris) {
     if (countEdgesForCell(t.c, t.r) !== t.count) return false;
   }
 
-  // 3. テトリス
+  // -------------------------------------------------
+  // 4. テトリス (形状配置)
+  // -------------------------------------------------
   if (polys.length > 0) {
     let totalBlocks = 0;
     for (let p of polys) {
       for (let row of p.shape) for (let col of row) if (col === 1) totalBlocks++;
     }
-    // 面積オーバーならNG
+    
+    // マス数が一致しなければNG
     if (totalBlocks !== regionCells.length) return false;
     
     // 配置シミュレーション
@@ -249,8 +258,6 @@ function collectElements(cells) {
     if (ply) res.polyominoes.push({ ...ply, kind: 'poly' });
     let elm = getElementAt(PUZZLE_DATA.eliminators, cell.c, cell.r);
     if (elm) res.eliminators.push({ ...elm, kind: 'eliminator' });
-    
-    // ここで名前を triangleSymbols に統一して取得
     let tr = getElementAt(PUZZLE_DATA.triangleSymbols, cell.c, cell.r);
     if (tr) res.triangleSymbols.push({ ...tr, kind: 'triangle' });
   }

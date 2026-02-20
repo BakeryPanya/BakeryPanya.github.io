@@ -1,5 +1,5 @@
 // ==========================================
-// editor.js - COMPLETE VERSION
+// editor.js - COMPLETE VERSION (Colored Polyomino Support)
 // ==========================================
 
 let currentEditorTool = 'start'; // 現在選択中のツール
@@ -46,8 +46,38 @@ function togglePolyEditor() {
   if (creator) {
     if (tool === 'tetris') {
       creator.style.display = 'block';
+      // 表示時に色を更新
+      refreshPolyGridColors();
     } else {
       creator.style.display = 'none';
+    }
+  }
+}
+
+// ヘルパー: 現在選択中の色をRGB文字列で取得
+function getSelectedColorRGB() {
+  let sel = document.getElementById('color-select');
+  if (!sel || typeof CONFIG === 'undefined') return "yellow";
+  let id = parseInt(sel.value);
+  let rgb = CONFIG.style.colors.palette[id];
+  if (!rgb) return "yellow";
+  return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+}
+
+// ヘルパー: グリッドの色を再描画 (色選択変更時などに呼ぶ)
+function refreshPolyGridColors() {
+  let container = document.getElementById('poly-grid-container');
+  if (!container) return;
+  let btns = container.children;
+  let activeColor = getSelectedColorRGB();
+  
+  for (let i = 0; i < btns.length; i++) {
+    let r = Math.floor(i / polyGridSize);
+    let c = i % polyGridSize;
+    if (polyGridState[r][c] === 1) {
+      btns[i].style.backgroundColor = activeColor;
+    } else {
+      btns[i].style.backgroundColor = "#333";
     }
   }
 }
@@ -55,7 +85,9 @@ function togglePolyEditor() {
 // ポリオミノ作成グリッドのセルクリック処理
 function togglePolyCell(r, c, btnElement) {
   polyGridState[r][c] = polyGridState[r][c] ? 0 : 1;
-  btnElement.style.backgroundColor = polyGridState[r][c] ? "yellow" : "#333";
+  // 選択中の色を反映
+  let activeColor = getSelectedColorRGB();
+  btnElement.style.backgroundColor = polyGridState[r][c] ? activeColor : "#333";
 }
 
 
@@ -179,10 +211,10 @@ function handleCellClick(c, r, tool, color, param) {
       PUZZLE_DATA.polyominoes.push({ 
         c, r, 
         shape: customShape, 
-        color: CONFIG.style.polyomino.color 
+        color: color // ★色情報を保存
       });
     } else {
-      alert("形が作られていません。ツールバー下のグリッドで黄色いブロックを描いてください。");
+      alert("形が作られていません。ツールバー下のグリッドでブロックを描いてください。");
     }
 
   } else if (tool === 'triangle') {

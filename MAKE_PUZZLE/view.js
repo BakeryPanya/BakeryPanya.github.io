@@ -54,44 +54,48 @@ function drawEliminators() {
 // 新規追加: ポリオミノ（テトリス型）の描画
 function drawPolyominoes() {
   if (!PUZZLE_DATA.polyominoes) return;
-  noStroke();
-  fill(...CONFIG.style.polyomino.color);
 
-  let s = CONFIG.display.spacing; // グリッドのマスの大きさ
-  let bs = CONFIG.style.polyomino.blockSize; // ブロック1個の大きさ
+  noStroke();
+  let s = CONFIG.display.spacing;
+  let blockSize = CONFIG.style.polyomino.blockSize;
   let gap = CONFIG.style.polyomino.gap;
-  
+
   for (let p of PUZZLE_DATA.polyominoes) {
-    let shape = p.shape;
-    let rows = shape.length;
-    let cols = shape[0].length;
+    // ★変更点: 固定色ではなく、オブジェクトのcolorIDからパレット色を取得
+    // colorが未定義の場合はデフォルトで黄色(4)を使う
+    let colorId = (p.color !== undefined) ? p.color : 4;
+    let rgb = CONFIG.style.colors.palette[colorId];
     
-    // アイコン全体のサイズを計算（中央寄せのため）
-    let iconW = cols * bs + (cols - 1) * gap;
-    let iconH = rows * bs + (rows - 1) * gap;
-    
-    // マスの中心座標
+    // 万が一パレットにないIDなら黄色にする安全策
+    if (!rgb) rgb = CONFIG.style.colors.palette[4];
+
+    fill(...rgb);
+
     let centerX = p.c * s + s/2;
     let centerY = p.r * s + s/2;
-    
-    // 描画開始位置（左上）
-    let startX = centerX - iconW / 2;
-    let startY = centerY - iconH / 2;
-    
-    // シェイプの描画
+
+    // 形状の中心を計算してオフセット
+    let rows = p.shape.length;
+    let cols = p.shape[0].length;
+    let totalW = cols * blockSize + (cols - 1) * gap;
+    let totalH = rows * blockSize + (rows - 1) * gap;
+
+    let startX = centerX - totalW / 2;
+    let startY = centerY - totalH / 2;
+
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
-        if (shape[r][c] === 1) {
+        if (p.shape[r][c] === 1) {
           rect(
-            startX + c * (bs + gap),
-            startY + r * (bs + gap),
-            bs, bs
+            startX + c * (blockSize + gap),
+            startY + r * (blockSize + gap),
+            blockSize,
+            blockSize,
+            2 // 角丸
           );
         }
       }
     }
-    
-    // 傾きなどの回転表現は今回は省略（固定向き）
   }
 }
 

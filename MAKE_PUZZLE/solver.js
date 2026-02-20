@@ -1,18 +1,29 @@
-// solver.js - IMPROVED VERSION
+// ==========================================
+// solver.js - COMPLETE VERSION
+// ==========================================
 
 async function solvePuzzle() {
   console.log("Solver started...");
-  let statusEl = document.getElementById('status');
-  if (statusEl) statusEl.innerText = "SOLVING...";
   
-  // 画面描画更新のために少し待機
-  await new Promise(r => setTimeout(r, 10));
+  // UIのステータス更新
+  let statusEl = document.getElementById('status');
+  if (statusEl) {
+    statusEl.innerText = "SOLVING...";
+    statusEl.style.color = "yellow";
+  }
+  
+  // 画面描画更新のために少し待機 (UIがフリーズしないように)
+  await new Promise(r => setTimeout(r, 50));
 
   let solutions = [];
   let visited = new Set();
   
   // スタート地点取得
   let startNode = PUZZLE_DATA.start;
+  if (!startNode) {
+    console.error("No start node defined");
+    return;
+  }
   
   // 現在の探索パス (ノードの配列)
   let currentPath = [startNode];
@@ -20,33 +31,35 @@ async function solvePuzzle() {
 
   // 元のパスを退避（探索後に戻すため）
   let originalPath = [...path];
+  
+  // 探索打ち切りフラグ
+  let found = false;
 
   // 深さ優先探索 (DFS)
   function dfs(curr) {
+    if (found) return; // 既に見つかっていれば終了
+
     // 1. ゴール到達判定
     if (curr.c === PUZZLE_DATA.goal.c && curr.r === PUZZLE_DATA.goal.r) {
       
-      // ★重要★: logic.js はグローバル変数 'path' を参照して判定を行います。
-      // そのため、一時的に探索中の currentPath をグローバル path に代入します。
+      // ★重要★: logic.js はグローバル変数 'path' を参照して判定を行うため、
+      // 一時的に探索中のパスをグローバル path に代入して判定させる
       path = currentPath;
       
       try {
         // logic.js のルール判定関数を呼び出す
-        // ここで星、四角、テトリス、消去マークなどの全ルールがチェックされます
         if (validateRule()) {
-          // 正解なら保存 (配列のコピーを作成)
+          // 正解なら保存
           solutions.push([...currentPath]);
-          
-          // 1つ見つかれば十分ならここで return true; などを返す
+          found = true; // 1つ見つかれば終了
         }
       } catch (e) {
-        console.error("Validation error:", e);
+        console.error("Validation error in solver:", e);
       }
-      
       return;
     }
 
-    // 2. 隣接ノードへ移動
+    // 2. 隣接ノードへ移動 (上下左右)
     let neighbors = [
       { c: curr.c, r: curr.r - 1 }, // 上
       { c: curr.c, r: curr.r + 1 }, // 下
@@ -54,7 +67,11 @@ async function solvePuzzle() {
       { c: curr.c + 1, r: curr.r }  // 右
     ];
 
+    // ランダムに並び替えると、毎回違う解が見つかるかも（今回は固定）
+    
     for (let next of neighbors) {
+      if (found) break;
+
       // 範囲外チェック
       if (next.c < 0 || next.c > PUZZLE_DATA.cols || next.r < 0 || next.r > PUZZLE_DATA.rows) continue;
       
@@ -63,7 +80,8 @@ async function solvePuzzle() {
       if (visited.has(key)) continue;
 
       // 壁チェック (logic.js の関数を再利用)
-      if (!canMoveBetween(curr, next)) continue;
+      // canMoveBetween は logic.js で定義されている必要があります
+      if (typeof canMoveBetween === 'function' && !canMoveBetween(curr, next)) continue;
 
       // 進む
       visited.add(key);
@@ -72,33 +90,41 @@ async function solvePuzzle() {
       dfs(next);
 
       // 戻る (バックトラック)
-      currentPath.pop();
-      visited.delete(key);
-      
-      // パフォーマンスのため、解が1つ見つかったら探索を打ち切る場合はここを有効化
-      if (solutions.length > 0) return;
+      if (!found) {
+        currentPath.pop();
+        visited.delete(key);
+      }
     }
   }
 
   // 探索実行
   try {
+    // pathをクリアして探索開始
+    path = [];
     dfs(startNode);
+  } catch (e) {
+    console.error("Solver error:", e);
   } finally {
-    // 必ず元のパスに戻す（これがないと画面上の線がおかしくなる）
-    path = originalPath;
+    // 見つからなかった場合は元のパスに戻す
+    if (!found) {
+      path = originalPath;
+    }
   }
 
   // 結果表示
   if (solutions.length > 0) {
-    console.log(`Found ${solutions.length} solutions.`);
+    console.log("Solution found!");
     if (statusEl) {
-      statusEl.innerText = "SOLVED! (See console)";
+      statusEl.innerText = "SOLVED! (Auto-played)";
       statusEl.style.color = "lime";
     }
     
-    // 最初の正解を画面に表示してアニメーションさせる
-    gameState = 'SOLVED';
+    // 見つかった解を適用して状態を「解決済み」にする
     path = solutions[0];
+    gameState = 'SOLVED';
+    
+    // ステージモード中なら、自動で次へ進む処理を呼ぶか検討
+    // (ここでは自動進行させず、ユーザーに見せるだけに留める)
     
   } else {
     console.log("No solution found.");
@@ -106,5 +132,7 @@ async function solvePuzzle() {
       statusEl.innerText = "NO SOLUTION.";
       statusEl.style.color = "red";
     }
+    // 元のパスに戻す
+    path = originalPath;
   }
 }
