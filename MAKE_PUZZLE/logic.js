@@ -1,5 +1,5 @@
 // ==========================================
-// logic.js - COMPLETE VERSION (Colored Polyominoes)
+// logic.js - COMPLETE VERSION (Colored Polyominoes Fixed)
 // ==========================================
 
 // ---------------------------------------------------------
@@ -166,39 +166,34 @@ function validateRegionWithEliminators(regionCells) {
   return false;
 }
 
-// サブセットに対するルール判定 (★ここが修正の要です)
+// サブセットに対するルール判定
 function checkSubsetRules(subset, regionCells) {
   let sqs = subset.filter(e => e.kind === 'square');
   let strs = subset.filter(e => e.kind === 'star');
   let polys = subset.filter(e => e.kind === 'poly');
   let tris = subset.filter(e => e.kind === 'triangle');
 
+  // ★黄色(ID:4) のテトリスは「標準テトリス」として扱い、色判定の対象外にする
+  // colorが未定義、または4(黄色)のものは除外した「色付きテトリス」のリストを作る
+  let coloredPolys = polys.filter(p => p.color !== undefined && p.color !== 4);
+
   // -------------------------------------------------
-  // 1. 色分けルール (Square & Polyomino)
+  // 1. 色分けルール (Square & Colored Polyomino)
   // -------------------------------------------------
-  // 四角とテトリスは「色」の制約を持つ（領域を分ける必要がある）
-  // 星は自身の色とペアの相手が必要なだけで、他の色の存在を邪魔しない（通常ルール）
-  // しかし、ユーザー要望により「テトリスも四角と同じように色分け」を行う
-  
-  let colorEnforcers = [...sqs, ...polys]; 
-  let distinctColors = new Set(colorEnforcers.map(e => e.color !== undefined ? e.color : 4)); // color未定義なら黄色(4)とみなす
+  let colorEnforcers = [...sqs, ...coloredPolys]; 
+  let distinctColors = new Set(colorEnforcers.map(e => e.color));
   
   if (distinctColors.size > 1) return false; // 2色以上混在していたらNG
 
   // -------------------------------------------------
-  // 2. 星のペアリング (Star & Square & Polyomino)
+  // 2. 星のペアリング (Star & Square & Colored Polyomino)
   // -------------------------------------------------
-  // 星がある場合、その色のオブジェクト(星、四角、テトリス)の合計は「ちょうど2個」でなければならない
-  
-  // 領域内の星に含まれる全色をチェック
   let allStarColors = new Set(strs.map(s => s.color));
   
   for (let color of allStarColors) {
     let starCount = strs.filter(s => s.color === color).length;
     let squareCount = sqs.filter(s => s.color === color).length;
-    
-    // テトリスもカウントに含める（デフォルト色は4）
-    let polyCount = polys.filter(p => (p.color !== undefined ? p.color : 4) === color).length;
+    let polyCount = coloredPolys.filter(p => p.color === color).length;
 
     let totalCount = starCount + squareCount + polyCount;
     
@@ -218,6 +213,7 @@ function checkSubsetRules(subset, regionCells) {
   // -------------------------------------------------
   // 4. テトリス (形状配置)
   // -------------------------------------------------
+  // 形状の配置チェックは色に関係なくすべてのテトリス(polys)で行う
   if (polys.length > 0) {
     let totalBlocks = 0;
     for (let p of polys) {
